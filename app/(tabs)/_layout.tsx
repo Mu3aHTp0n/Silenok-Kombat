@@ -4,14 +4,22 @@ import { View, Image, Text, StyleSheet } from 'react-native'
 import icons from '../../constants/icons';
 import React from 'react';
 
-const TabIcon = ({ icon, color, name, focused }: { icon: any; color: string; name: string; focused: boolean }) => {
+interface IComponentProps {
+	icon: any,
+	color: string,
+	name: string,
+	focused: boolean,
+}
+
+const TabIcon = ({ icon, color, name, focused }: IComponentProps) => {
 	return (
-		<View style={{display: 'flex', justifyContent: 'center', gap: 2, alignItems: 'center'}}>
+		<View className="justify-center items-center gap-2">
 			<Image source={icon}
 				   resizeMode='contain'
 				   style={styles.iconImg}
-				   tintColor={color} />
-			<Text style={{color: color, }}>
+				   tintColor={color}
+					className="w-6 h-6"/>
+			<Text className='text-' style={{color: color, }}>
 				{name}
 			</Text>
 		</View>
