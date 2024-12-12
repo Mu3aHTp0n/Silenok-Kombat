@@ -1,5 +1,5 @@
-import { Tabs, Redirect } from 'expo-router';
-import { View, Image, Text, StyleSheet } from 'react-native'
+import { Tabs } from 'expo-router';
+import { View, Image, Text, SafeAreaView } from 'react-native'
 
 import icons from '../../constants/icons';
 import React from 'react';
@@ -13,16 +13,17 @@ interface IComponentProps {
 
 const TabIcon = ({ icon, color, name, focused }: IComponentProps) => {
 	return (
-		<View className="justify-center items-center gap-2">
-			<Image source={icon}
-				   resizeMode='contain'
-				   style={styles.iconImg}
-				   tintColor={color}
-					className="w-6 h-6"/>
-			<Text className='text-' style={{color: color, }}>
-				{name}
-			</Text>
-		</View>
+		<SafeAreaView>
+			<View className="justify-center items-center gap-2 w-24">
+				<Image source={icon}
+					   resizeMode='contain'
+					   tintColor={color}
+						className="w-6 h-6"/>
+				<Text className='text-m text-center' style={{color: color, }}>
+					{name}
+				</Text>
+			</View>
+		</SafeAreaView>
 	)
 }
 
@@ -37,7 +38,7 @@ export default function TabsLayout() {
 					borderTopWidth: 1,
 					borderTopColor: '#232533',
 					height: 96,
-					paddingTop: 15,
+					paddingTop: 25,
 				}
 			}}>
 				<Tabs.Screen
@@ -49,7 +50,7 @@ export default function TabsLayout() {
 							<TabIcon
 								icon={icons.mine}
 								color={color}
-								name="Mine"
+								name="Шахта"
 								focused={focused}
 							/>
 						)
@@ -64,7 +65,7 @@ export default function TabsLayout() {
 							<TabIcon
 								icon={icons.leaderboards}
 								color={color}
-								name="Leaderboard"
+								name="Лидеры"
 								focused={focused}
 							/>
 						)
@@ -79,7 +80,7 @@ export default function TabsLayout() {
 							<TabIcon
 								icon={icons.skins}
 								color={color}
-								name="Skins"
+								name="Скины"
 								focused={focused}
 							/>
 						)
@@ -89,10 +90,3 @@ export default function TabsLayout() {
 		</>
 	)
 }
-
-const styles = StyleSheet.create({
-	iconImg: {
-		width: 24,
-		height: 24,
-	}
-})
