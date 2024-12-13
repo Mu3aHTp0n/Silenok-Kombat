@@ -23,13 +23,22 @@ function FormField({title, value, placeholder, handleChangeText, otherStyles}: I
 						   placeholderTextColor="#7b7b8b"
 						   onChangeText={handleChangeText}
 						   onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)}
-						   secureTextEntry={title === 'Пароль' && !showPassword} />
-				{title === 'Пароль' && (
+						   secureTextEntry={(title === 'Пароль' || title === 'Подтверждение пароля') && !showPassword} />
+				{(title === 'Пароль' || title === 'Подтверждение пароля') && (
 					<TouchableOpacity onPress={() => {
 						setShowPassword(!showPassword);
 					}}>
 						<Image source={!showPassword ? icons.eye : icons.closedEye}
 							   className='w-6 h-6'
+							   resizeMode='contain'/>
+					</TouchableOpacity>
+				)}
+				{title === 'Электронная почта' && (
+					<TouchableOpacity onPress={() => {
+						null
+					}}>
+						<Image source={icons.email}
+							   className='w-8 h-8'
 							   resizeMode='contain'/>
 					</TouchableOpacity>
 				)}

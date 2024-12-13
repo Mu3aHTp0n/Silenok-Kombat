@@ -4,6 +4,7 @@ const icons = {
 	skins: require('./tabIcon/skins.png'),
 	eye: require('./tabIcon/view.png'),
 	closedEye: require('./tabIcon/hide.png'),
+	email: require('./tabIcon/email.png'),
 }
 
 export default icons;
