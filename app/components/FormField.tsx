@@ -5,21 +5,24 @@ import icons from "../../constants/icons";
 interface IComponentProps {
 	title: string,
 	value: string,
-	placeholder: any,
+	placeholder: string,
 	handleChangeText: any,
+	otherStyles: string,
 }
 
-function FormField({title, value, placeholder, handleChangeText}: IComponentProps) {
+function FormField({title, value, placeholder, handleChangeText, otherStyles}: IComponentProps) {
 	const [showPassword, setShowPassword] = useState(false)
+	const [isFocused, setIsFocused] = useState(false);
 
 	return (
-		<View>
+		<View className={`space-y-2 ${otherStyles}`}>
 			<Text className='text-gray-400 text-xl mt-8'>{title}</Text>
-			<View className='rounded-2xl h-16 w-full bg-purple-900 px-4 border-2 border-black-200 justify-center items-center flex-row active:border-sky-800'>
-				<TextInput className='flex-1 text-neutral-300' value={value}
-						   onChangeText={handleChangeText}
+			<View className={`rounded-2xl h-16 w-full bg-purple-900 px-4 border-2 justify-center items-center flex-row border-fuchsia-950 ${isFocused ? 'border-white' : 'border-fuchsia-950'}`}>
+				<TextInput className='flex-1 text-white text-base' value={value}
 						   placeholder={placeholder}
 						   placeholderTextColor="#7b7b8b"
+						   onChangeText={handleChangeText}
+						   onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)}
 						   secureTextEntry={title === 'Пароль' && !showPassword} />
 				{title === 'Пароль' && (
 					<TouchableOpacity onPress={() => {

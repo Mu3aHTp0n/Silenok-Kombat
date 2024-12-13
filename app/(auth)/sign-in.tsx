@@ -14,10 +14,12 @@ export default function SignIn() {
 				<FormField title='Логин'
 						   value={form.login}
 						   placeholder={''}
+						   otherStyles={'mt-7'}
 						   handleChangeText={(e: any) => setForm({ ...form, login: e})} />
 				<FormField title='Пароль'
 						   value={form.password}
 						   placeholder={''}
+						   otherStyles={'mt-7'}
 						   handleChangeText={(e: any) => setForm({ ...form, password: e})} />
 
 			</View>
