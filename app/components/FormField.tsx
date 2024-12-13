@@ -16,7 +16,7 @@ function FormField({title, value, placeholder, handleChangeText, otherStyles}: I
 
 	return (
 		<View className={`space-y-2 ${otherStyles}`}>
-			<Text className='text-gray-400 text-xl mt-8'>{title}</Text>
+			<Text className='text-gray-400 text-xl'>{title}</Text>
 			<View className={`rounded-2xl h-16 w-full bg-purple-900 px-4 border-2 justify-center items-center flex-row border-fuchsia-950 ${isFocused ? 'border-white' : 'border-fuchsia-950'}`}>
 				<TextInput className='flex-1 text-white text-base' value={value}
 						   placeholder={placeholder}

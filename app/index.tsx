@@ -1,7 +1,8 @@
 import { Text, SafeAreaView, View } from "react-native";
-import { Link } from "expo-router";
+import {Redirect, router} from "expo-router";
 import { StatusBar } from "expo-status-bar";
 
+import CustomButton from "@/components/CustomButton";
 import "../global.css";
 
 export default function Index() {
@@ -12,8 +13,10 @@ export default function Index() {
                 <Text className="text-purple-600 font-bold text-3xl pb-8">死にたい</Text>
                 <StatusBar style='auto'/>
                 <View className="flex-row gap-12">
-                    <Link className='color-purple-800 bg-neutral-200 text-2xl px-6 py-2 rounded-lg' href='/(auth)/sign-in'>Sing-in</Link>
-                    <Link className='color-purple-800 bg-neutral-200 text-2xl px-6 py-2 rounded-lg' href='/(tabs)/mine'>Mine</Link>
+                    <CustomButton title={'Авторизоваться'}
+                                  handlePress={() => router.push('/sign-in')}  containerStyles={''}/>
+                    <CustomButton title={'Зарегистрироваться'}
+                                  handlePress={() => router.push('/sign-up')}  containerStyles={''}/>
                 </View>
             </SafeAreaView>
         </View>

@@ -1,12 +1,28 @@
-import {SafeAreaView, View} from 'react-native';
+import {SafeAreaView, View, Text} from 'react-native';
 import React, {useState} from 'react';
 import FormField from "@/components/FormField";
+import CustomButton from "@/components/CustomButton";
+import {Link} from "expo-router";
+import axios from "axios";
 
 export default function SignIn() {
 	const [form, setForm] = useState({
 		login: '',
 		password: '',
 	})
+
+	function auth() {
+		axios.post('demo/auth', {
+			username: form.login,
+			password: form.password,
+		})
+			.then(response => {
+				console.log(response)
+			})
+			.catch(error => {
+				console.log(error)
+			})
+	}
 
 	return (
 		<SafeAreaView className='bg-slate-900 h-full'>
@@ -21,7 +37,13 @@ export default function SignIn() {
 						   placeholder={''}
 						   otherStyles={'mt-7'}
 						   handleChangeText={(e: any) => setForm({ ...form, password: e})} />
-
+				<CustomButton title={'Войти'}
+							  handlePress={() => auth}
+							  containerStyles={'mt-12'}/>
+				<View className="pt-5 flex-row justify-items-center">
+					<Text className='text-lg text-gray-100 w-32'>Нет аккаунта? </Text>
+					<Link className='text-lg text-purple-800 font-bold underline' href={"/sign-up"}>Зарегистрируйтесь</Link>
+				</View>
 			</View>
 		</SafeAreaView>
 	)
