@@ -7,7 +7,7 @@ import "../global.css";
 export default function Index() {
     return (
         <View className="bg-cyan-950">
-            <SafeAreaView className='justify-center items-center h-full bg-cyan-1000' >
+            <SafeAreaView className='justify-center items-center h-full bg-gray-900' >
                 <Text className="text-purple-600 font-bold text-3xl">ヴラディレーナ・ミリーゼ</Text>
                 <Text className="text-purple-600 font-bold text-3xl pb-8">死にたい</Text>
                 <StatusBar style='auto'/>
