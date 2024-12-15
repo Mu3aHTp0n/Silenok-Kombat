@@ -12,16 +12,20 @@ export default function SignIn() {
 	})
 
 	function auth() {
-		axios.post('demo/auth', {
-			username: form.login,
-			password: form.password,
-		})
+		// Проверка на наличие пустых полей
+		const isFormValid = Object.values(form).every(value => value !== '');
+		if (isFormValid) {
+			axios.post('demo/auth', {
+				username: form.login,
+				password: form.password,
+			})
 			.then(response => {
 				console.log(response)
 			})
 			.catch(error => {
 				console.log(error)
 			})
+		}
 	}
 
 	return (

@@ -15,20 +15,23 @@ export default function SignUp() {
 	})
 
 	function registration() {
-		// TODO: проверка ключей на пустую строку
-		axios.post('demo/registration', {
-			username: form.username,
-			password: form.password,
-			confirmPassword: form.password,
-			code: form.code,
-			email: form.email,
-		})
+		// Проверка на наличие пустых полей
+		const isFormValid = Object.values(form).every(value => value !== '');
+		if (isFormValid) {
+			axios.post('demo/registration', {
+				username: form.username,
+				password: form.password,
+				confirmPassword: form.confirmPassword,
+				code: form.code,
+				email: form.email,
+			})
 			.then(response => {
-				console.log(response)
+				console.log(response);
 			})
 			.catch(error => {
-				console.log(error)
-			})
+				console.log(error);
+			});
+		}
 	}
 
 	return (
