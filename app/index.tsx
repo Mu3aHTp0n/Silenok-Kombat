@@ -12,11 +12,13 @@ export default function Index() {
                 <Text className="text-purple-600 font-bold text-3xl">ヴラディレーナ・ミリーゼ</Text>
                 <Text className="text-purple-600 font-bold text-3xl pb-8">死にたい</Text>
                 <StatusBar style='auto'/>
-                <View className="flex-row gap-12">
+                <View className="flex gap-12">
                     <CustomButton title={'Авторизоваться'}
                                   handlePress={() => router.push('/sign-in')}  containerStyles={''}/>
                     <CustomButton title={'Зарегистрироваться'}
                                   handlePress={() => router.push('/sign-up')}  containerStyles={''}/>
+                    <CustomButton title={'Тапаем シレノク'}
+                                  handlePress={() => router.push('/mine')}  containerStyles={''}/>
                 </View>
             </SafeAreaView>
         </View>
