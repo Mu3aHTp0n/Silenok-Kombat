@@ -15,15 +15,18 @@ function FormField({title, value, placeholder, handleChangeText, otherStyles}: I
 	const [showPassword, setShowPassword] = useState(false)
 	const [isFocused, setIsFocused] = useState(false);
 	const [isError, setIsError] = useState(false);
+	const [message, setMessage] = useState('');
+	
 
 	function codeRequest() {
 		if (value !== '') {
 			setIsError(false);
-			axios.post('demo/sendCode', {
+			axios.post('https://silenok.containerapps.ru/demo/sendCode', {
 				email: value
 			})
 				.then(response => {
-					console.log(response)
+					const message = response.data.message; 
+					setMessage(message);
 				})
 				.catch(error => {
 					console.log(error)
@@ -63,7 +66,8 @@ function FormField({title, value, placeholder, handleChangeText, otherStyles}: I
 					</TouchableOpacity>
 				)}
 			</View>
-			{isError && <Text className="text-red-600">Заполните поле</Text>}
+			{ isError && <Text className="text-red-600">Заполните поле</Text> }
+			{ message && <Text className='text-white text-lg'>{message}</Text> }
 		</View>
 	);
 }

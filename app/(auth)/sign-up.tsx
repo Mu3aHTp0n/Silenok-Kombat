@@ -1,5 +1,6 @@
 import {SafeAreaView, Text, View, ScrollView} from 'react-native';
 import React, {useState} from 'react';
+
 import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
 import {Link} from "expo-router";
@@ -18,7 +19,7 @@ export default function SignUp() {
 		// Проверка на наличие пустых полей
 		const isFormValid = Object.values(form).every(value => value !== '');
 		if (isFormValid) {
-			axios.post('demo/registration', {
+			axios.post(`https://silenok.containerapps.ru/demo/registration`, {
 				username: form.username,
 				password: form.password,
 				confirmPassword: form.confirmPassword,
@@ -26,7 +27,7 @@ export default function SignUp() {
 				email: form.email,
 			})
 			.then(response => {
-				console.log(response);
+
 			})
 			.catch(error => {
 				console.log(error);
@@ -63,7 +64,7 @@ export default function SignUp() {
 						   otherStyles={'mt-7'}
 						   handleChangeText={(e: any) => setForm({ ...form, confirmPassword: e})} />
 				<CustomButton title={'Войти'}
-							  handlePress={() => registration}
+							  handlePress={() => registration()}
 							  containerStyles={'mt-12'}/>
 				<View className="pt-5 flex-row justify-items-center">
 					<Text className='text-lg text-gray-100 w-42'>Уже есть аккаунт? </Text>
