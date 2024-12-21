@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import axios from "axios";
 import * as SecureStore from 'expo-secure-store';
-
+import { router } from 'expo-router';
 import {SafeAreaView, View, ScrollView, Text} from 'react-native';
 import {Link} from "expo-router";
 import FormField from "@/components/FormField";
@@ -30,11 +30,11 @@ export default function SignIn() {
 				if (token) {
 					SecureStore.setItemAsync('userToken', token)
 						.then(() => {
-							setForm({...form, login: '', password: ''});
+							setForm({...form, login: '', password: ''})
+							router.push('/')
 						})
-				} else {
-					console.error('Токен не найден в ответе:', response.data);
 				}
+
 			})
 			.catch(error => {
 				if (axios.isAxiosError(error)) {

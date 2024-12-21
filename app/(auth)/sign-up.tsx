@@ -1,12 +1,16 @@
 import {SafeAreaView, Text, View, ScrollView} from 'react-native';
 import React, {useState} from 'react';
 
+import { router } from 'expo-router';
+
 import FormField from "@/components/FormField";
 import CustomButton from "@/components/CustomButton";
 import {Link} from "expo-router";
 import axios from "axios";
 
 export default function SignUp() {
+	const [isError, setIsError] = useState('')
+	const [message, setMessage] = useState('')
 	const [form, setForm] = useState({
 		username: "",
 		password: "",
@@ -27,12 +31,36 @@ export default function SignUp() {
 				email: form.email,
 			})
 			.then(response => {
-
+				setIsError('')
+				setForm({...form, 
+					username: "",
+					password: "",
+					confirmPassword: "",
+					code: "",
+					email: "",
+				})
+				setMessage(response.data.message)
+				setTimeout(() => router.push('/'), 2000)	
 			})
 			.catch(error => {
-				console.log(error);
-			});
-		}
+				if (axios.isAxiosError(error)) {
+					const axiosError = error;
+					if (axiosError.response) {
+						let errorMessage
+						if (axiosError.response.data?.code != undefined) {
+							errorMessage = axiosError.response.data.code;
+						}
+						if (axiosError.response.data?.passwordMatch != undefined) {
+							errorMessage = errorMessage + " " + axiosError.response.data.passwordMatch;
+						}
+						if (axiosError.response.data?.username != undefined) {
+							errorMessage = errorMessage + " " + axiosError.response.data.username;
+						}
+					    setIsError(errorMessage);
+					}
+				}
+			})
+		} else setIsError('Не все поля заполнены')
 	}
 
 	return (
@@ -63,6 +91,8 @@ export default function SignUp() {
 						   placeholder={''}
 						   otherStyles={'mt-7'}
 						   handleChangeText={(e: any) => setForm({ ...form, confirmPassword: e})} />
+				{ isError && <Text className='text-red-700 font-bold text-xl'>{ isError }</Text>}
+				{ message && <Text className='text-green-600 font-bold text-xl'>{ message }</Text> }
 				<CustomButton title={'Войти'}
 							  handlePress={() => registration()}
 							  containerStyles={'mt-12'}/>

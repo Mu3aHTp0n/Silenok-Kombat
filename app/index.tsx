@@ -4,12 +4,14 @@ import {Redirect, router} from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as SecureStore from 'expo-secure-store';
 
+import { useIsFocused } from "@react-navigation/native";
+
 import CustomButton from "@/components/CustomButton";
 import "../global.css";
 
 export default function Index() {
     // const { checkToken, isShow } = useAuth();
-
+    const isFocused = useIsFocused();
     const [isShow, setIsShow] = useState(false)
 
     async function checkToken() {
@@ -19,7 +21,7 @@ export default function Index() {
 
     useEffect(() => {
         checkToken();
-    }, []);
+    }, [isFocused]);
 
     function deleteToken() {
         SecureStore.deleteItemAsync('userToken');
@@ -33,17 +35,18 @@ export default function Index() {
                 <Text className="text-purple-600 font-bold text-3xl pb-8">死にたい</Text>
                 <StatusBar style='auto'/>
                 <View className="flex">
-                    <Text className="text-white">isShow: {isShow ? 'true' : 'false'}</Text>
                     {
                         isShow ? (
-                            <View>
+                            <View className="flex gap-8">
                                 <CustomButton title={'Тапаем シレノク'}
-                                              handlePress={() => router.push('/mine')}/>
+                                              handlePress={() => {
+                                                setTimeout(() => router.push('/mine'), 500)
+                                                }}/>
                                 <CustomButton title={"Выйти из аккаунта"}
                                               handlePress={() => deleteToken()}/>
                             </View>
                         ) : (
-                            <View>
+                            <View className="flex gap-8">
                                 <CustomButton title={'Авторизоваться'}
                                               handlePress={() => router.push('/sign-in')}/>
                                 <CustomButton title={'Зарегистрироваться'}

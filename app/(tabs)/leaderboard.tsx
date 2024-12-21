@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import {SafeAreaView, View, Text, FlatList} from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import { useIsFocused } from '@react-navigation/native';
 
 interface Player {
 	rank: number,
@@ -8,16 +10,26 @@ interface Player {
 	name: string,
 	count: number,
 }
+let timer;
 
 export default function leaderboard() {
+	const isFocused = useIsFocused();
 	const [leaders, setLeaders] = useState<Player[]>([])
 
-	useEffect(() => {
+	function getLeaderboard() {
 		axios.get('https://silenok.containerapps.ru/demo/getLeaderboard')
 		.then((response) => {
 			setLeaders(response.data)
 		})
-	}, [])
+	}
+
+	
+	useEffect(() => {
+		if (isFocused) {
+			getLeaderboard();			
+			timer = setTimeout(() => {getLeaderboard()}, 200)
+		}
+	}, [isFocused])
 	
 	function Leader({ item }: { item: Player }) {
 		return (
