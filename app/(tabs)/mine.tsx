@@ -13,9 +13,8 @@ export default function Mine() {
 	const isFocused = useIsFocused();
 	const [coin, setCoin] = useState(0);
 	const [tempCoin, setTempCoin] = useState(0);
-	const intervalRef = useRef();
+	let intervalRef: NodeJS.Timeout;
 	const tempCoinRef = useRef(tempCoin);
-
 
 	function incrementScore() {
 		setCoin(prev => prev + 1);
@@ -35,18 +34,12 @@ export default function Mine() {
 	}
 
 	async function sendCoin (tempCoins: number) {
-		if (tempCoin > 0) {
+		if (tempCoinRef.current > 0) {
 			axios.put('https://silenok.containerapps.ru/demo/changeCoin', { coin: tempCoins },
 				{ headers: { Authorization: 'Bearer ' + (SecureStore.getItem('userToken')) } })
 				.then(() => setTempCoin(0));
-			clearInterval(intervalRef.current)
 		}
 	}
-
-	// Получение монет
-	useEffect(() => {
-		getCoins()
-	}, [])
 
 	// Обновление состояния
 	useEffect(() => {
@@ -56,15 +49,16 @@ export default function Mine() {
 	// Отправка при потере фокуса, очистка и установка интервала
 	useEffect(() => {
         if (isFocused) {
-            intervalRef.current = setInterval(() => {
-                sendCoin(tempCoinRef.current);
-            }, 30000);
 			getCoins()
-        } else {
+			intervalRef = setInterval(() => {
+				sendCoin(tempCoinRef.current);
+            }, 60000);
+        }  
+		if (!isFocused) {
             sendCoin(tempCoinRef.current);
-            clearInterval(intervalRef.current);
+            clearInterval(intervalRef);
         }
-        return () => clearInterval(intervalRef.current);
+        return () => clearInterval(intervalRef);
     }, [isFocused]);
 	
 	return (
