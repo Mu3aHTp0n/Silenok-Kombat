@@ -10,24 +10,24 @@ interface Player {
 	name: string,
 	count: number,
 }
-let timer;
 
 export default function leaderboard() {
 	const isFocused = useIsFocused();
 	const [leaders, setLeaders] = useState<Player[]>([])
 
-	function getLeaderboard() {
+	async function getLeaderboard() {
 		axios.get('https://silenok.containerapps.ru/demo/getLeaderboard')
 		.then((response) => {
 			setLeaders(response.data)
 		})
 	}
 
-	
 	useEffect(() => {
 		if (isFocused) {
-			getLeaderboard();			
-			timer = setTimeout(() => {getLeaderboard()}, 200)
+			getLeaderboard()
+			.then(() => {
+				setTimeout(() => {getLeaderboard()}, 300)
+			})
 		}
 	}, [isFocused])
 	
